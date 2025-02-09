@@ -3,6 +3,7 @@ import psycopg2
 import pandas as pd
 import os 
 from dotenv import load_dotenv
+import plotly.express as px
 
 
 load_dotenv()
@@ -24,11 +25,41 @@ def get_data():
     data = cursor.fetchall()
     conn.close()
 
+    print(data)
+
     return data
 
-info = get_data()
 
-print(info)
+data = get_data()
+
+bitcoin_df = pd.DataFrame(data, columns=["Date", "Closing Price", "Title", "Link"])
+bitcoin_df['Date'] = pd.to_datetime(bitcoin_df['Date'])
+
+st.title = ("📈 Bitcoin Prices and Related News")
+
+
+fig = px.line(bitcoin_df, x="Date", y="Closing Price", markers=True, title="Bitcoin Prices Over Time")
+
+
+selected_date = st.selectbox("Select a Date:", bitcoin_df["Date"].unique())
+
+
+articles_on_date = bitcoin_df[bitcoin_df["Date"] == selected_date]
+
+
+st.plotly_chart(fig, use_container_width=True)
+
+
+st.subheader(f"📰 News Articles for {selected_date.date()}")
+
+for index, row in articles_on_date.iterrows():
+    st.markdown(f"### [{row['Title']}]({row['Link']})")
+
+st.subheader("📰 Browse All Articles")
+
+for index, row in bitcoin_df.iterrows():
+    with st.expander(f"{row['Date'].date()} - {row['Title']}"):
+        st.markdown(f"[Read More]({row['Link']})")
 
 
 
