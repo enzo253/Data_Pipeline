@@ -40,12 +40,9 @@ st.title = ("📈 Bitcoin Prices and Related News")
 
 fig = px.line(bitcoin_df, x="Date", y="Closing Price", markers=True, title="Bitcoin Prices Over Time")
 
-
 selected_date = st.selectbox("Select a Date:", bitcoin_df["Date"].unique())
 
-
 articles_on_date = bitcoin_df[bitcoin_df["Date"] == selected_date]
-
 
 st.plotly_chart(fig, use_container_width=True)
 
@@ -57,7 +54,7 @@ for index, row in articles_on_date.iterrows():
 
 st.subheader("📰 Browse All Articles")
 
-for index, row in bitcoin_df.iterrows():
+for index, row in bitcoin_df.head(15).iterrows():
     with st.expander(f"{row['Date'].date()} - {row['Title']}"):
         st.markdown(f"[Read More]({row['Link']})")
 
