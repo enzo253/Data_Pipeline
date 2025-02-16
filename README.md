@@ -173,4 +173,3 @@ This project is licensed under the **MIT License** - see the LICENSE file for de
 📩 **Email:** [enzo.wurtele@outlook.com](mailto:enzo.wurtele@outlook.com)
 
 🚀 Check out the app: [Streamlit Bitcoin News App](https://bitcoinnews-krtk4tzwzgxupivcyjmhxc.streamlit.app/)
-```
