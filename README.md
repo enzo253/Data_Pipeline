@@ -1,4 +1,3 @@
-```markdown
 # Bitcoin Prices and Related News - Streamlit Application
 
 ## Overview
@@ -37,53 +36,48 @@ This project provides a Streamlit web app that allows users to explore Bitcoin p
 ```sh
 git clone https://github.com/yourusername/bitcoin-prices-news.git
 cd bitcoin-prices-news
-```
-
-#### 2. Create and activate a virtual environment:
-```sh
+2. Create and activate a virtual environment:
+sh
+Copy
+Edit
 python3 -m venv venv
 source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-```
-
-#### 3. Install the required packages:
-```sh
+3. Install the required packages:
+sh
+Copy
+Edit
 pip install -r requirements.txt
-```
-
-#### 4. Create a `.env` file in the root directory and add your environment variables:
-```
+4. Create a .env file in the root directory and add your environment variables:
+ini
+Copy
+Edit
 MY_RAILWAY_KEY=your_database_connection_string_here
-```
-
----
-
-## Running the Application Locally
+Running the Application Locally
 To run the Streamlit app locally, use the following command:
-```sh
+
+sh
+Copy
+Edit
 streamlit run app.py
-```
-Open your browser and navigate to `http://localhost:8501` to view the app.
+Open your browser and navigate to http://localhost:8501 to view the app.
 
----
-
-## API Usage
+API Usage
 The app exposes an API that can be used to fetch Bitcoin price predictions and related news for a specific date.
 
-### API Endpoint: `/predict`
-- **Method**: `GET`
-
-### Request Parameters:
-| Parameter | Type  | Description |
-|-----------|------|-------------|
-| `date` | `string` | The date for which you want to get the Bitcoin price prediction (Format: YYYY-MM-DD). |
-
-### Example Request:
-```sh
+API Endpoint: /predict
+Method: GET
+Request Parameters:
+Parameter	Type	Description
+date	string	The date for which you want to get the Bitcoin price prediction (Format: YYYY-MM-DD).
+Example Request:
+sh
+Copy
+Edit
 curl "http://localhost:8501/predict?date=2025-02-01"
-```
-
-### Example Response:
-```json
+Example Response:
+json
+Copy
+Edit
 {
     "date": "2025-02-01",
     "predicted_price": 40000.25,
@@ -98,81 +92,64 @@ curl "http://localhost:8501/predict?date=2025-02-01"
         }
     ]
 }
-```
+Database Schema
+bitcoin_data Table (Stores Bitcoin Prices)
+Column	Type	Description
+id	SERIAL (PK)	Unique identifier
+date	DATE	Date of the recorded price
+closing_price	FLOAT	Bitcoin closing price on that date
+article_data Table (Stores News Articles)
+Column	Type	Description
+id	SERIAL (PK)	Unique identifier
+title	TEXT	Article title
+link	TEXT	Link to the full article
+article_bitcoin Table (Junction Table Linking Bitcoin Data & Articles)
+Column	Type	Description
+bitcoin_id	INT (FK)	References bitcoin_data.id
+article_id	INT (FK)	References article_data.id
+AWS Deployment
+1️⃣ AWS Lambda for Daily Updates at 12 PM
+Set up an AWS Lambda function that scrapes the latest Bitcoin prices and news articles.
+Configure AWS CloudWatch Events to trigger the Lambda function every day at 12 PM (UTC or your preferred timezone).
+Ensure the Lambda function updates the PostgreSQL database on AWS RDS.
+2️⃣ AWS RDS for Database Storage
+Create an AWS RDS instance using PostgreSQL.
+Store all Bitcoin price data and related news in the database.
+Ensure security with IAM roles and VPC settings.
+Security Considerations
+✅ Environment Variables: Store database credentials securely using .env. ✅ AWS IAM Roles: Use IAM roles to limit database access. ✅ Database Security: Restrict RDS access to specific IPs.
 
----
+Contributing
+Fork this repository.
+Create a new branch for your feature:
+sh
+Copy
+Edit
+git checkout -b feature-name
+Commit your changes:
+sh
+Copy
+Edit
+git commit -am "Add new feature"
+Push to the branch:
+sh
+Copy
+Edit
+git push origin feature-name
+Create a new Pull Request.
+License
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Database Schema
+Contact
+📩 Email: enzo.wurtele@outlook.com
 
-### `bitcoin_data` Table (Stores Bitcoin Prices)
-| Column  | Type         | Description |
-|---------|-------------|-------------|
-| `id`    | `SERIAL` (PK) | Unique identifier |
-| `date`  | `DATE`        | Date of the recorded price |
-| `closing_price` | `FLOAT` | Bitcoin closing price on that date |
+🚀 Check out the app: Streamlit Bitcoin News App
 
-### `article_data` Table (Stores News Articles)
-| Column  | Type         | Description |
-|---------|-------------|-------------|
-| `id`    | `SERIAL` (PK) | Unique identifier |
-| `title` | `TEXT`       | Article title |
-| `link`  | `TEXT`       | Link to the full article |
+less
+Copy
+Edit
 
-### `article_bitcoin` Table (Junction Table Linking Bitcoin Data & Articles)
-| Column  | Type   | Description |
-|---------|--------|-------------|
-| `bitcoin_id` | `INT` (FK) | References `bitcoin_data.id` |
-| `article_id` | `INT` (FK) | References `article_data.id` |
-
----
-
-## AWS Deployment
-
-### 1️⃣ AWS Lambda for Daily Updates at 12 PM
-- Set up an **AWS Lambda function** that scrapes the latest Bitcoin prices and news articles.
-- Configure **AWS CloudWatch Events** to trigger the Lambda function **every day at 12 PM (UTC or your preferred timezone)**.
-- Ensure the Lambda function updates the PostgreSQL database on AWS RDS.
-
-### 2️⃣ AWS RDS for Database Storage
-- Create an **AWS RDS** instance using **PostgreSQL**.
-- Store all Bitcoin price data and related news in the database.
-- Ensure security with **IAM roles** and **VPC settings**.
-
----
-
-## Security Considerations
-✅ **Environment Variables**: Store database credentials securely using `.env`.
-✅ **AWS IAM Roles**: Use IAM roles to limit database access.
-✅ **Database Security**: Restrict RDS access to specific IPs.
-
----
-
-## Contributing
-1. **Fork this repository**.
-2. **Create a new branch** for your feature:
-   ```sh
-   git checkout -b feature-name
-   ```
-3. **Commit your changes**:
-   ```sh
-   git commit -am "Add new feature"
-   ```
-4. **Push to the branch**:
-   ```sh
-   git push origin feature-name
-   ```
-5. **Create a new Pull Request**.
-
----
-
-## License
-This project is licensed under the **MIT License** - see the LICENSE file for details.
-
----
-
-## Contact
-📩 **Email:** [enzo.wurtele@outlook.com](mailto:enzo.wurtele@outlook.com)
-
-🚀 Check out the app: [Streamlit Bitcoin News App](https://bitcoinnews-krtk4tzwzgxupivcyjmhxc.streamlit.app/)
-```
-
+### Key Update:
+- I added the clickable link to your **Streamlit app** under the **Contact** section:
+  ```markdown
+  🚀 Check out the app: [Streamlit Bitcoin News App](https://bitcoinnews-krtk4tzwzgxupivcyjmhxc.streamlit.app/)
