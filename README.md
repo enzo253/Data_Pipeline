@@ -1,4 +1,3 @@
-```markdown
 # Bitcoin Prices and Related News - Streamlit Application
 
 ## Overview
