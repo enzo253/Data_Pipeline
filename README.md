@@ -1,3 +1,4 @@
+```markdown
 # Bitcoin Prices and Related News - Streamlit Application
 
 ## Overview
@@ -165,11 +166,13 @@ curl "http://localhost:8501/predict?date=2025-02-01"
 ---
 
 ## License
-This project is licensed under the **MIT License** - see the `LICENSE` file for details.
+This project is licensed under the **MIT License** - see the LICENSE file for details.
 
 ---
 
 ## Contact
 📩 **Email:** [enzo.wurtele@outlook.com](mailto:enzo.wurtele@outlook.com)
 
+🚀 Check out the app: [Streamlit Bitcoin News App](https://bitcoinnews-krtk4tzwzgxupivcyjmhxc.streamlit.app/)
+```
 
